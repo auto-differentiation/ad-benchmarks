@@ -1,0 +1,8 @@
+.deps/
+build/
+tmp/*
+!tmp/.gitkeep
+# timing runs write wherever they are pointed; only the published results are kept
+results/*
+!results/amd/
+__pycache__/

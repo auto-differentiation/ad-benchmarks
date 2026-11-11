@@ -1,0 +1,6 @@
+library,workload,size,median_s,iqr_s,plain_median_s,ratio,peak_memory_bytes,peak_memory_growth_bytes,peak_heap_reserved_bytes,library_version,compiler,cpu,date,git_sha
+plain,sabr,100,1.44e-06,1.0000000000000116e-08,1.44e-06,1,4923392,0,0,n/a,/usr/bin/c++ 15.2.0,AMD EPYC (Zen 5),2026-10-28T11:22:15Z,unknown
+xad,sabr,100,1.2269999999999999e-05,1.6000000000000016e-07,1.44e-06,8.5208333333333339,5234688,311296,201326592,main@364b3e9,/usr/bin/c++ 15.2.0,AMD EPYC (Zen 5),2026-10-28T11:22:15Z,unknown
+cppad,sabr,100,2.4329999999999999e-05,1.1900000000000005e-07,1.44e-06,16.895833333333332,6356992,0,0,20250000.2@f7d1601,/usr/bin/c++ 15.2.0,AMD EPYC (Zen 5),2026-10-28T11:22:15Z,unknown
+fd,sabr,100,4.3050000000000003e-05,2.800000000000041e-07,1.44e-06,29.895833333333336,7352320,0,0,n/a,/usr/bin/c++ 15.2.0,AMD EPYC (Zen 5),2026-10-28T11:22:15Z,unknown
+mylib,sabr,100,4.32e-06,1e-08,1.44e-06,3,6291456,1048576,3145728,1.0,/usr/bin/c++ 15.2.0,AMD EPYC (Zen 5),2026-10-28T11:22:15Z,unknown

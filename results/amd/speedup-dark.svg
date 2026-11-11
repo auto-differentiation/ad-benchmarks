@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="856" viewBox="0 0 600 856" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" font-size="13" fill="#f0efec">
+<rect width="600" height="856" rx="8" fill="#1a1a19"/>
+<text x="16" y="30" font-size="18" font-weight="600">AD speed-up over bump &amp; reval</text>
+<text x="16" y="52" font-size="13.5" fill="#c3c2b7">Time for bump &amp; reval ÷ time for value and gradient with AD. Bump &amp; reval is estimated</text>
+<text x="16" y="72" font-size="13.5" fill="#c3c2b7">as central differences: two plain double evaluations per input plus the base value.</text>
+<text x="16" y="92" font-size="13.5" fill="#c3c2b7">Higher is better; log scale. XAD + codegen evaluates vectorised; the other libraries and</text>
+<text x="16" y="112" font-size="13.5" fill="#c3c2b7">the bump &amp; reval estimate are scalar.</text>
+<rect x="16" y="126" width="12" height="12" rx="3" fill="#3987e5"/>
+<text x="33" y="136.5" font-size="12.5">XAD</text>
+<rect x="70.2" y="126" width="12" height="12" rx="3" fill="#d95926"/>
+<text x="87.2" y="136.5" font-size="12.5">XAD + codegen (commercial add-on)</text>
+<rect x="316.40000000000003" y="126" width="12" height="12" rx="3" fill="#64635e"/>
+<text x="333.40000000000003" y="136.5" font-size="12.5">Other AD libraries</text>
+<text x="16" y="170" font-size="15" font-weight="600">LMM<tspan dx="8" font-size="12.5" font-weight="400" fill="#c3c2b7">bump &amp; reval: 319 evaluations, 26.0 s</tspan></text>
+<line x1="180.00" x2="180.00" y1="180" y2="290" stroke="#2c2c2a"/>
+<text x="180.00" y="305" font-size="12" text-anchor="middle" fill="#c3c2b7">0.1×</text>
+<line x1="279.00" x2="279.00" y1="180" y2="290" stroke="#2c2c2a"/>
+<text x="279.00" y="305" font-size="12" text-anchor="middle" fill="#c3c2b7">1×</text>
+<line x1="378.00" x2="378.00" y1="180" y2="290" stroke="#2c2c2a"/>
+<text x="378.00" y="305" font-size="12" text-anchor="middle" fill="#c3c2b7">10×</text>
+<line x1="477.00" x2="477.00" y1="180" y2="290" stroke="#2c2c2a"/>
+<text x="477.00" y="305" font-size="12" text-anchor="middle" fill="#c3c2b7">100×</text>
+<line x1="576.00" x2="576.00" y1="180" y2="290" stroke="#2c2c2a"/>
+<text x="576.00" y="305" font-size="12" text-anchor="middle" fill="#c3c2b7">1000×</text>
+<text x="168" y="189.00" font-size="14" text-anchor="end">XAD + codegen</text>
+<text x="168" y="201.00" font-size="11" text-anchor="end" fill="#c3c2b7">(commercial add-on)</text>
+<rect class="bar" x="279.00" y="184.50" width="252.47" height="13" rx="4.00" fill="#d95926" data-library="xad-codegen" data-workload="lmm" data-speedup="354.98"/><rect x="279.00" y="184.50" width="4.00" height="13" fill="#d95926"/>
+<text x="536.47" y="195.50" font-size="13" text-anchor="start">355×</text>
+<text x="168" y="217.50" font-size="14" text-anchor="end">XAD</text>
+<rect class="bar" x="279.00" y="206.50" width="189.96" height="13" rx="4.00" fill="#3987e5" data-library="xad" data-workload="lmm" data-speedup="82.94"/><rect x="279.00" y="206.50" width="4.00" height="13" fill="#3987e5"/>
+<text x="473.96" y="217.50" font-size="13" text-anchor="start">82.9×</text>
+<text x="168" y="239.50" font-size="14" text-anchor="end">Adept 2</text>
+<rect class="bar" x="279.00" y="228.50" width="184.48" height="13" rx="4.00" fill="#64635e" data-library="adept" data-workload="lmm" data-speedup="73.02"/><rect x="279.00" y="228.50" width="4.00" height="13" fill="#64635e"/>
+<text x="468.48" y="239.50" font-size="13" text-anchor="start">73.0×</text>
+<text x="168" y="261.50" font-size="14" text-anchor="end">CppAD</text>
+<rect class="bar" x="279.00" y="250.50" width="135.41" height="13" rx="4.00" fill="#64635e" data-library="cppad" data-workload="lmm" data-speedup="23.32"/><rect x="279.00" y="250.50" width="4.00" height="13" fill="#64635e"/>
+<text x="419.41" y="261.50" font-size="13" text-anchor="start">23.3×</text>
+<text x="168" y="283.50" font-size="14" text-anchor="end">autodiff</text>
+<rect class="bar" x="274.65" y="272.50" width="4.35" height="13" rx="2.17" fill="#64635e" data-library="autodiff" data-workload="lmm" data-speedup="0.90"/><rect x="276.83" y="272.50" width="2.17" height="13" fill="#64635e"/>
+<text x="269.65" y="283.50" font-size="13" text-anchor="end">0.90×</text>
+<line class="ref" data-workload="lmm" x1="279.00" x2="279.00" y1="177" y2="292" stroke="#c3c2b7" stroke-width="1.5"/>
+<text x="16" y="342" font-size="15" font-weight="600">Heston<tspan dx="8" font-size="12.5" font-weight="400" fill="#c3c2b7">bump &amp; reval: 15 evaluations, 177 ms</tspan></text>
+<line x1="180.00" x2="180.00" y1="352" y2="462" stroke="#2c2c2a"/>
+<text x="180.00" y="477" font-size="12" text-anchor="middle" fill="#c3c2b7">0.1×</text>
+<line x1="279.00" x2="279.00" y1="352" y2="462" stroke="#2c2c2a"/>
+<text x="279.00" y="477" font-size="12" text-anchor="middle" fill="#c3c2b7">1×</text>
+<line x1="378.00" x2="378.00" y1="352" y2="462" stroke="#2c2c2a"/>
+<text x="378.00" y="477" font-size="12" text-anchor="middle" fill="#c3c2b7">10×</text>
+<line x1="477.00" x2="477.00" y1="352" y2="462" stroke="#2c2c2a"/>
+<text x="477.00" y="477" font-size="12" text-anchor="middle" fill="#c3c2b7">100×</text>
+<line x1="576.00" x2="576.00" y1="352" y2="462" stroke="#2c2c2a"/>
+<text x="576.00" y="477" font-size="12" text-anchor="middle" fill="#c3c2b7">1000×</text>
+<text x="168" y="361.00" font-size="14" text-anchor="end">XAD + codegen</text>
+<text x="168" y="373.00" font-size="11" text-anchor="end" fill="#c3c2b7">(commercial add-on)</text>
+<rect class="bar" x="279.00" y="356.50" width="158.86" height="13" rx="4.00" fill="#d95926" data-library="xad-codegen" data-workload="heston" data-speedup="40.24"/><rect x="279.00" y="356.50" width="4.00" height="13" fill="#d95926"/>
+<text x="442.86" y="367.50" font-size="13" text-anchor="start">40.2×</text>
+<text x="168" y="389.50" font-size="14" text-anchor="end">XAD</text>
+<rect class="bar" x="279.00" y="378.50" width="80.46" height="13" rx="4.00" fill="#3987e5" data-library="xad" data-workload="heston" data-speedup="6.50"/><rect x="279.00" y="378.50" width="4.00" height="13" fill="#3987e5"/>
+<text x="364.46" y="389.50" font-size="13" text-anchor="start">6.50×</text>
+<text x="168" y="411.50" font-size="14" text-anchor="end">Adept 2</text>
+<rect class="bar" x="279.00" y="400.50" width="63.25" height="13" rx="4.00" fill="#64635e" data-library="adept" data-workload="heston" data-speedup="4.35"/><rect x="279.00" y="400.50" width="4.00" height="13" fill="#64635e"/>
+<text x="347.25" y="411.50" font-size="13" text-anchor="start">4.35×</text>
+<text x="168" y="433.50" font-size="14" text-anchor="end">CppAD</text>
+<rect class="bar" x="279.00" y="422.50" width="24.94" height="13" rx="4.00" fill="#64635e" data-library="cppad" data-workload="heston" data-speedup="1.79"/><rect x="279.00" y="422.50" width="4.00" height="13" fill="#64635e"/>
+<text x="308.94" y="433.50" font-size="13" text-anchor="start">1.79×</text>
+<text x="168" y="455.50" font-size="14" text-anchor="end">autodiff</text>
+<rect class="bar" x="279.00" y="444.50" width="29.70" height="13" rx="4.00" fill="#64635e" data-library="autodiff" data-workload="heston" data-speedup="2.00"/><rect x="279.00" y="444.50" width="4.00" height="13" fill="#64635e"/>
+<text x="313.70" y="455.50" font-size="13" text-anchor="start">2.00×</text>
+<line class="ref" data-workload="heston" x1="279.00" x2="279.00" y1="349" y2="464" stroke="#c3c2b7" stroke-width="1.5"/>
+<text x="16" y="514" font-size="15" font-weight="600">CVA<tspan dx="8" font-size="12.5" font-weight="400" fill="#c3c2b7">bump &amp; reval: 79 evaluations, 164 ms</tspan></text>
+<line x1="180.00" x2="180.00" y1="524" y2="634" stroke="#2c2c2a"/>
+<text x="180.00" y="649" font-size="12" text-anchor="middle" fill="#c3c2b7">0.1×</text>
+<line x1="279.00" x2="279.00" y1="524" y2="634" stroke="#2c2c2a"/>
+<text x="279.00" y="649" font-size="12" text-anchor="middle" fill="#c3c2b7">1×</text>
+<line x1="378.00" x2="378.00" y1="524" y2="634" stroke="#2c2c2a"/>
+<text x="378.00" y="649" font-size="12" text-anchor="middle" fill="#c3c2b7">10×</text>
+<line x1="477.00" x2="477.00" y1="524" y2="634" stroke="#2c2c2a"/>
+<text x="477.00" y="649" font-size="12" text-anchor="middle" fill="#c3c2b7">100×</text>
+<line x1="576.00" x2="576.00" y1="524" y2="634" stroke="#2c2c2a"/>
+<text x="576.00" y="649" font-size="12" text-anchor="middle" fill="#c3c2b7">1000×</text>
+<text x="168" y="533.00" font-size="14" text-anchor="end">XAD + codegen</text>
+<text x="168" y="545.00" font-size="11" text-anchor="end" fill="#c3c2b7">(commercial add-on)</text>
+<rect class="bar" x="279.00" y="528.50" width="231.48" height="13" rx="4.00" fill="#d95926" data-library="xad-codegen" data-workload="cva" data-speedup="217.85"/><rect x="279.00" y="528.50" width="4.00" height="13" fill="#d95926"/>
+<text x="515.48" y="539.50" font-size="13" text-anchor="start">218×</text>
+<text x="168" y="561.50" font-size="14" text-anchor="end">XAD</text>
+<rect class="bar" x="279.00" y="550.50" width="109.55" height="13" rx="4.00" fill="#3987e5" data-library="xad" data-workload="cva" data-speedup="12.78"/><rect x="279.00" y="550.50" width="4.00" height="13" fill="#3987e5"/>
+<text x="393.55" y="561.50" font-size="13" text-anchor="start">12.8×</text>
+<text x="168" y="583.50" font-size="14" text-anchor="end">Adept 2</text>
+<rect class="bar" x="279.00" y="572.50" width="87.82" height="13" rx="4.00" fill="#64635e" data-library="adept" data-workload="cva" data-speedup="7.71"/><rect x="279.00" y="572.50" width="4.00" height="13" fill="#64635e"/>
+<text x="371.82" y="583.50" font-size="13" text-anchor="start">7.71×</text>
+<text x="168" y="605.50" font-size="14" text-anchor="end">CppAD</text>
+<rect class="bar" x="279.00" y="594.50" width="94.78" height="13" rx="4.00" fill="#64635e" data-library="cppad" data-workload="cva" data-speedup="9.06"/><rect x="279.00" y="594.50" width="4.00" height="13" fill="#64635e"/>
+<text x="378.78" y="605.50" font-size="13" text-anchor="start">9.06×</text>
+<text x="168" y="627.50" font-size="14" text-anchor="end">autodiff</text>
+<rect class="bar" x="279.00" y="616.50" width="16.59" height="13" rx="4.00" fill="#64635e" data-library="autodiff" data-workload="cva" data-speedup="1.47"/><rect x="279.00" y="616.50" width="4.00" height="13" fill="#64635e"/>
+<text x="300.59" y="627.50" font-size="13" text-anchor="start">1.47×</text>
+<line class="ref" data-workload="cva" x1="279.00" x2="279.00" y1="521" y2="636" stroke="#c3c2b7" stroke-width="1.5"/>
+<text x="16" y="686" font-size="15" font-weight="600">SABR<tspan dx="8" font-size="12.5" font-weight="400" fill="#c3c2b7">bump &amp; reval: 31 evaluations, 45.3 µs</tspan></text>
+<line x1="180.00" x2="180.00" y1="696" y2="806" stroke="#2c2c2a"/>
+<text x="180.00" y="821" font-size="12" text-anchor="middle" fill="#c3c2b7">0.1×</text>
+<line x1="279.00" x2="279.00" y1="696" y2="806" stroke="#2c2c2a"/>
+<text x="279.00" y="821" font-size="12" text-anchor="middle" fill="#c3c2b7">1×</text>
+<line x1="378.00" x2="378.00" y1="696" y2="806" stroke="#2c2c2a"/>
+<text x="378.00" y="821" font-size="12" text-anchor="middle" fill="#c3c2b7">10×</text>
+<line x1="477.00" x2="477.00" y1="696" y2="806" stroke="#2c2c2a"/>
+<text x="477.00" y="821" font-size="12" text-anchor="middle" fill="#c3c2b7">100×</text>
+<line x1="576.00" x2="576.00" y1="696" y2="806" stroke="#2c2c2a"/>
+<text x="576.00" y="821" font-size="12" text-anchor="middle" fill="#c3c2b7">1000×</text>
+<text x="168" y="705.00" font-size="14" text-anchor="end">XAD + codegen</text>
+<text x="168" y="717.00" font-size="11" text-anchor="end" fill="#c3c2b7">(commercial add-on)</text>
+<rect class="bar" x="279.00" y="700.50" width="151.65" height="13" rx="4.00" fill="#d95926" data-library="xad-codegen" data-workload="sabr" data-speedup="34.03"/><rect x="279.00" y="700.50" width="4.00" height="13" fill="#d95926"/>
+<text x="435.65" y="711.50" font-size="13" text-anchor="start">34.0×</text>
+<text x="168" y="733.50" font-size="14" text-anchor="end">XAD</text>
+<rect class="bar" x="279.00" y="722.50" width="91.97" height="13" rx="4.00" fill="#3987e5" data-library="xad" data-workload="sabr" data-speedup="8.49"/><rect x="279.00" y="722.50" width="4.00" height="13" fill="#3987e5"/>
+<text x="375.97" y="733.50" font-size="13" text-anchor="start">8.49×</text>
+<text x="168" y="755.50" font-size="14" text-anchor="end">Adept 2</text>
+<rect class="bar" x="279.00" y="744.50" width="30.98" height="13" rx="4.00" fill="#64635e" data-library="adept" data-workload="sabr" data-speedup="2.06"/><rect x="279.00" y="744.50" width="4.00" height="13" fill="#64635e"/>
+<text x="314.98" y="755.50" font-size="13" text-anchor="start">2.06×</text>
+<text x="168" y="777.50" font-size="14" text-anchor="end">CppAD</text>
+<rect class="bar" x="279.00" y="766.50" width="24.89" height="13" rx="4.00" fill="#64635e" data-library="cppad" data-workload="sabr" data-speedup="1.78"/><rect x="279.00" y="766.50" width="4.00" height="13" fill="#64635e"/>
+<text x="308.89" y="777.50" font-size="13" text-anchor="start">1.78×</text>
+<text x="168" y="799.50" font-size="14" text-anchor="end">autodiff</text>
+<rect class="bar" x="279.00" y="788.50" width="12.69" height="13" rx="4.00" fill="#64635e" data-library="autodiff" data-workload="sabr" data-speedup="1.34"/><rect x="279.00" y="788.50" width="4.00" height="13" fill="#64635e"/>
+<text x="296.69" y="799.50" font-size="13" text-anchor="start">1.34×</text>
+<line class="ref" data-workload="sabr" x1="279.00" x2="279.00" y1="693" y2="808" stroke="#c3c2b7" stroke-width="1.5"/>
+</svg>

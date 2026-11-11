@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": { "major": 3, "minor": 20, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "published",
+      "displayName": "Build options of the published run",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON",
+        "ADB_ARCH_FLAGS": "-march=native",
+        "XAD_USE_STRONG_INLINE": "ON",
+        "XAD_NO_THREADLOCAL": "ON",
+        "XAD_LINEAR_SLOTS": "ON",
+        "XAD_POSITION_INDEPENDENT_CODE": "OFF"
+      }
+    }
+  ]
+}

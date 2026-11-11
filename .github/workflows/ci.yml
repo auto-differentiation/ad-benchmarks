@@ -1,0 +1,58 @@
+# Build and correctness tests (ctest labels unit and check) and the
+# workflow-file lint (label lint) on every push and pull request. No timings:
+# the slow label and the bench_* programs stay out.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-24.04
+    env:
+      CC: gcc-14
+      CXX: g++-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends g++-14 ninja-build python3-pytest python3-yaml
+          # actionlint for the lint tests: a pinned release, checked against its SHA-256.
+          curl -fsSLo /tmp/actionlint.tar.gz \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  /tmp/actionlint.tar.gz" | sha256sum -c -
+          sudo tar -xzf /tmp/actionlint.tar.gz -C /usr/local/bin actionlint
+
+      # Pinned dependency downloads (FetchContent) and the CppAD
+      # install done at configure time; both change only with cmake/deps.cmake.
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .deps
+            build/_deps/install
+          key: deps-${{ runner.os }}-gcc14-${{ hashFiles('cmake/deps.cmake') }}
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_BASE_DIR=.deps
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build -L "unit|check" --output-on-failure --parallel 4
+
+      # Fails when the lint tests were not registered (actionlint or PyYAML
+      # missing at configure time) instead of passing with nothing run.
+      - name: Lint workflow files
+        run: ctest --test-dir build -L lint --no-tests=error --output-on-failure

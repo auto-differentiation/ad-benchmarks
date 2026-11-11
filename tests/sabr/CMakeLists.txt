@@ -1,0 +1,73 @@
+# W4: SABR smile calibration.
+
+add_executable(test_sabr_hagan test_hagan.cpp)
+target_include_directories(test_sabr_hagan PRIVATE ${PROJECT_SOURCE_DIR})
+target_link_libraries(test_sabr_hagan PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_sabr_hagan PROPERTIES LABELS unit)
+
+if(ADB_WITH_XAD)
+  add_executable(test_sabr_lm test_lm.cpp)
+  target_include_directories(test_sabr_lm PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_lm PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_lm PRIVATE xad)
+  gtest_discover_tests(test_sabr_lm PROPERTIES LABELS unit)
+endif()
+
+if(ADB_WITH_XAD)
+  add_executable(test_sabr_jacobian_fd test_jacobian_fd.cpp)
+  target_include_directories(test_sabr_jacobian_fd PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_jacobian_fd PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_jacobian_fd PRIVATE xad)
+  gtest_discover_tests(test_sabr_jacobian_fd PROPERTIES LABELS check)
+endif()
+
+if(ADB_WITH_XAD AND ADB_WITH_CPPAD)
+  add_executable(test_sabr_parity_cppad test_parity_cppad.cpp)
+  target_include_directories(test_sabr_parity_cppad PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_parity_cppad PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_parity_cppad PRIVATE xad cppad)
+  gtest_discover_tests(test_sabr_parity_cppad PROPERTIES LABELS check)
+endif()
+
+if(ADB_WITH_XAD AND ADB_WITH_CPPAD)
+  add_executable(test_sabr_cppad_tape_reuse test_cppad_tape_reuse.cpp)
+  target_include_directories(test_sabr_cppad_tape_reuse PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_cppad_tape_reuse PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_cppad_tape_reuse PRIVATE xad cppad)
+  gtest_discover_tests(test_sabr_cppad_tape_reuse PROPERTIES LABELS check)
+endif()
+
+if(ADB_WITH_XAD AND ADB_WITH_ADEPT)
+  add_executable(test_sabr_parity_adept test_parity_adept.cpp)
+  target_include_directories(test_sabr_parity_adept PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_parity_adept PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_parity_adept PRIVATE xad adept)
+  gtest_discover_tests(test_sabr_parity_adept PROPERTIES LABELS check)
+endif()
+
+if(ADB_WITH_XAD AND ADB_WITH_AUTODIFF)
+  add_executable(test_sabr_parity_autodiff test_parity_autodiff.cpp)
+  target_include_directories(test_sabr_parity_autodiff PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_parity_autodiff PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_parity_autodiff PRIVATE xad autodiff)
+  gtest_discover_tests(test_sabr_parity_autodiff PROPERTIES LABELS check)
+endif()
+
+if(ADB_WITH_XAD)
+  add_executable(test_sabr_lm_iterations test_lm_iterations.cpp)
+  target_include_directories(test_sabr_lm_iterations PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries(test_sabr_lm_iterations PRIVATE GTest::gtest_main)
+  adb_link_ad_libraries(test_sabr_lm_iterations PRIVATE xad)
+  gtest_discover_tests(test_sabr_lm_iterations PROPERTIES LABELS unit)
+endif()
+
+# Runs the bench_sabr executable (one set of child processes per column).
+if(ADB_ALL_AD_LIBRARIES_ON)
+  add_executable(test_sabr_bench test_bench.cpp)
+  target_link_libraries(test_sabr_bench PRIVATE GTest::gtest_main)
+  target_compile_definitions(test_sabr_bench PRIVATE
+    "BENCH_SABR=\"$<TARGET_FILE:bench_sabr>\""
+    "BENCH_OUT_DIR=\"${CMAKE_CURRENT_BINARY_DIR}\"")
+  add_dependencies(test_sabr_bench bench_sabr)
+  gtest_discover_tests(test_sabr_bench PROPERTIES LABELS unit)
+endif()

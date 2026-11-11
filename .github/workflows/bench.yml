@@ -1,0 +1,159 @@
+# Timing run on a GitHub-hosted runner, manual dispatch only. One runner for every column:
+# the four bench programs run single-threaded, pinned to one CPU, in rounds
+# whose workload order rotates (scripts/bench_all.sh); the rounds are combined
+# into one CSV per workload (median timings, peak memory) and rendered as
+# markdown tables and an SVG chart. Uploaded with the runner's lscpu and the
+# commit SHA.
+name: bench
+
+on:
+  workflow_dispatch:
+    inputs:
+      rounds:
+        description: Interleaved rounds (each runs all four workloads)
+        type: number
+        default: 5
+      lmm_args:
+        description: bench_lmm options
+        type: string
+        default: --paths 10000 --warmup 2 --iters 10
+      heston_args:
+        description: bench_heston options
+        type: string
+        default: --paths 10000 --steps 100 --warmup 2 --iters 20
+      cva_args:
+        description: bench_cva options
+        type: string
+        default: --size medium --warmup 2 --iters 20
+      sabr_args:
+        description: bench_sabr options
+        type: string
+        default: --warmup 100 --iterations 2000
+      xad_commit:
+        description: XAD commit to benchmark (40-hex SHA; empty = the cmake/deps.cmake pin)
+        type: string
+        default: ""
+      xad_sha256:
+        description: SHA256 of that commit's source archive (needed with xad_commit)
+        type: string
+        default: ""
+      native:
+        description: Build every library with -march=native (default off; see the reproducibility note in CMakeLists.txt)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  bench:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      CC: gcc-14
+      CXX: g++-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends g++-14 ninja-build
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .deps
+            build/_deps/install
+            build-xad-default/_deps/install
+          key: deps-${{ runner.os }}-gcc14-${{ hashFiles('cmake/deps.cmake') }}-xad-${{ inputs.xad_commit }}-native-${{ inputs.native }}
+
+      # The published run also built XAD with XAD_LINEAR_SLOTS=ON and
+      # XAD_POSITION_INDEPENDENT_CODE=OFF (CMakePresets.json, "published");
+      # this workflow does not pass them, so its XAD build differs from that run.
+      - name: Configure
+        run: |
+          opts=()
+          if [ -n "$XAD_COMMIT" ]; then opts+=("-DADB_XAD_COMMIT=$XAD_COMMIT"); fi
+          if [ -n "$XAD_SHA256" ]; then opts+=("-DADB_XAD_SHA256=$XAD_SHA256"); fi
+          if [ "$NATIVE" = true ]; then opts+=("-DADB_ARCH_FLAGS=-march=native"); fi
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_BASE_DIR=.deps \
+            -DXAD_USE_STRONG_INLINE=ON -DXAD_NO_THREADLOCAL=ON -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+            "${opts[@]}"
+        env:
+          XAD_COMMIT: ${{ inputs.xad_commit }}
+          XAD_SHA256: ${{ inputs.xad_sha256 }}
+          NATIVE: ${{ inputs.native }}
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      # The "xad-default" reference row: XAD at its own default options
+      # (strong inlining and thread-local tape untouched), everything else as
+      # in the main build (all libraries stay on: the benches link them all);
+      # only the bench programs are built.
+      - name: Configure xad-default
+        run: |
+          opts=()
+          if [ -n "$XAD_COMMIT" ]; then opts+=("-DADB_XAD_COMMIT=$XAD_COMMIT"); fi
+          if [ -n "$XAD_SHA256" ]; then opts+=("-DADB_XAD_SHA256=$XAD_SHA256"); fi
+          if [ "$NATIVE" = true ]; then opts+=("-DADB_ARCH_FLAGS=-march=native"); fi
+          cmake -S . -B build-xad-default -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_BASE_DIR=.deps \
+            -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+            "${opts[@]}"
+        env:
+          XAD_COMMIT: ${{ inputs.xad_commit }}
+          XAD_SHA256: ${{ inputs.xad_sha256 }}
+          NATIVE: ${{ inputs.native }}
+
+      - name: Build xad-default
+        run: cmake --build build-xad-default --parallel --target bench_lmm bench_heston bench_cva bench_sabr
+
+      - name: Record runner
+        run: |
+          mkdir -p results/ci
+          lscpu > results/ci/lscpu.txt
+          {
+            echo "sha: ${{ github.sha }}"
+            echo "ref: ${{ github.ref }}"
+            echo "runner: ${{ runner.name }} ${{ runner.os }} ${{ runner.arch }}"
+            echo "compiler: $("$CXX" --version | head -n 1)"
+            echo "rounds: ${{ inputs.rounds }}"
+            echo "lmm: $BENCH_LMM_ARGS"
+            echo "heston: $BENCH_HESTON_ARGS"
+            echo "cva: $BENCH_CVA_ARGS"
+            echo "sabr: $BENCH_SABR_ARGS"
+          } > results/ci/run.txt
+        env:
+          BENCH_LMM_ARGS: ${{ inputs.lmm_args }}
+          BENCH_HESTON_ARGS: ${{ inputs.heston_args }}
+          BENCH_CVA_ARGS: ${{ inputs.cva_args }}
+          BENCH_SABR_ARGS: ${{ inputs.sabr_args }}
+
+      - name: Benchmark
+        run: scripts/bench_all.sh build results/ci "${{ inputs.rounds }}"
+        env:
+          BENCH_XAD_DEFAULT_BUILD: build-xad-default
+          ADB_GIT_SHA: ${{ github.sha }}
+          BENCH_LMM_ARGS: ${{ inputs.lmm_args }}
+          BENCH_HESTON_ARGS: ${{ inputs.heston_args }}
+          BENCH_CVA_ARGS: ${{ inputs.cva_args }}
+          BENCH_SABR_ARGS: ${{ inputs.sabr_args }}
+
+      - name: Combine rounds
+        run: python3 scripts/combine_rounds.py results/ci
+
+      - name: Chart
+        run: >-
+          python3 scripts/chart.py --markdown results/ci/results.md --svg results/ci/chart.svg
+          results/ci/lmm.csv results/ci/heston.csv results/ci/cva.csv results/ci/sabr.csv
+
+      - name: Summary
+        run: cat results/ci/results.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ github.sha }}
+          path: results/ci
+          if-no-files-found: error
