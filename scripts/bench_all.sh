@@ -64,3 +64,5 @@ with open(main, "a", newline="") as f:
         fi
     done
 done
+
+python3 "$(dirname "$0")/run_record.py" "$build" "$out" "$rounds"

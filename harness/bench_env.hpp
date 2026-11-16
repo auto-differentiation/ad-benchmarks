@@ -1,5 +1,5 @@
 // Glue shared by the four benchmark programs (bench_heston, bench_lmm,
-// bench_cva, bench_sabr): the CPU model, the UTC date, the path of the running
+// bench_cva, bench_sabr): the CPU label, the UTC date, the path of the running
 // executable and the git SHA that fill the CSV rows, and the CLI options every
 // program shares.
 
@@ -16,24 +16,79 @@
 #include <fstream>
 #include <iostream>
 #include <ostream>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 namespace harness {
 
-// "model name" of /proc/cpuinfo without its label, "unknown" if absent.
+// The value of the first "key : value" line of /proc/cpuinfo text, "" if absent.
+inline std::string cpuinfo_field(const std::string& cpuinfo, const std::string& key)
+{
+    std::istringstream in(cpuinfo);
+    std::string line;
+    while (std::getline(in, line)) {
+        const std::size_t colon = line.find(':');
+        if (colon == std::string::npos) continue;
+        std::string label = line.substr(0, colon);
+        label.erase(label.find_last_not_of(" \t") + 1);
+        if (label != key) continue;
+        const std::size_t value = line.find_first_not_of(" \t", colon + 1);
+        return value == std::string::npos ? "" : line.substr(value);
+    }
+    return "";
+}
+
+// The microarchitecture of a vendor's CPU family and model (cpuinfo's
+// decimal "cpu family" and "model").
+inline std::string microarchitecture(const std::string& vendor, int family, int model)
+{
+    if (vendor == "AMD" && family == 0x1A) return "Zen 5";
+    if (vendor == "AMD" && family == 0x19)
+        return (model >= 0x10 && model <= 0x1F) || (model >= 0x60 && model <= 0x7F) || (model >= 0xA0 && model <= 0xAF)
+                   ? "Zen 4"
+                   : "Zen 3";
+    if (vendor == "AMD" && family == 0x17) return model >= 0x30 ? "Zen 2" : "Zen";
+    if (vendor == "Intel" && family == 6) switch (model) {
+        case 0x55: return "Skylake/Cascade Lake";
+        case 0x6A:
+        case 0x6C: return "Ice Lake";
+        case 0x8F: return "Sapphire Rapids";
+        case 0xCF: return "Emerald Rapids";
+        case 0xAD:
+        case 0xAE: return "Granite Rapids";
+        }
+    return "family " + std::to_string(family) + ", model " + std::to_string(model);
+}
+
+// A generic label for the CPU of /proc/cpuinfo text, "<vendor> <brand>
+// (<microarchitecture>)" such as "AMD EPYC (Zen 5)": no SKU, as published
+// results must not name the machine's provider.
+inline std::string cpu_label(const std::string& cpuinfo)
+{
+    const std::string id = cpuinfo_field(cpuinfo, "vendor_id");
+    const std::string vendor = id == "AuthenticAMD" ? "AMD" : id == "GenuineIntel" ? "Intel" : "";
+    if (vendor.empty()) return "unknown";
+    const std::string name = cpuinfo_field(cpuinfo, "model name");
+    std::string brand;
+    for (const char* b : {"EPYC", "Ryzen Threadripper", "Ryzen", "Xeon", "Core"})
+        if (name.find(b) != std::string::npos) {
+            brand = std::string(" ") + b;
+            break;
+        }
+    const int family = std::atoi(cpuinfo_field(cpuinfo, "cpu family").c_str());
+    const int model = std::atoi(cpuinfo_field(cpuinfo, "model").c_str());
+    return vendor + brand + " (" + microarchitecture(vendor, family, model) + ")";
+}
+
+// cpu_label of this machine's /proc/cpuinfo.
 inline std::string cpu_name()
 {
     std::ifstream f("/proc/cpuinfo");
-    std::string line;
-    while (std::getline(f, line))
-        if (line.rfind("model name", 0) == 0) {
-            const std::size_t colon = line.find(':');
-            if (colon != std::string::npos)
-                return line.substr(line.find_first_not_of(' ', colon + 1));
-        }
-    return "unknown";
+    std::ostringstream text;
+    text << f.rdbuf();
+    return cpu_label(text.str());
 }
 
 // The current UTC time as "YYYY-MM-DDTHH:MM:SSZ".
