@@ -2,8 +2,8 @@ cff-version: 1.2.0
 title: "AD Library Benchmarks"
 message: "If you use these benchmarks or refer to their results, please cite this repository."
 type: software
-version: "2026.11"
-date-released: 2026-11-11
+version: "1.0.0"
+date-released: 2026-11-16
 authors:
   - name: "Xcelerit Computing Ltd."
     website: "https://www.xcelerit.com"
