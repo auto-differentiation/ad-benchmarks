@@ -1,0 +1,76 @@
+Test project /home/ubuntu/ad_benchmarks/v1-run3/src/ad-benchmarks-1.0.0/build
+      Start  38: LmmMartingale.DiscountedBondsMatchInitialCurve
+ 1/34 Test  #38: LmmMartingale.DiscountedBondsMatchInitialCurve ........   Passed    0.08 sec
+      Start  39: LmmLive.XadGradientHasNoZeroComponent
+ 2/34 Test  #39: LmmLive.XadGradientHasNoZeroComponent .................   Passed    0.01 sec
+      Start  40: LmmXad.GradientObjectReusesItsOwnTape
+ 3/34 Test  #40: LmmXad.GradientObjectReusesItsOwnTape .................   Passed    0.00 sec
+      Start  41: LmmFd.XadGradientMatchesCentralFd
+ 4/34 Test  #41: LmmFd.XadGradientMatchesCentralFd .....................   Passed    0.10 sec
+      Start  42: LmmParity.CppadMatchesXadAtTwoPointsFromOneTape
+ 5/34 Test  #42: LmmParity.CppadMatchesXadAtTwoPointsFromOneTape .......   Passed    0.06 sec
+      Start  43: LmmCppad.SweepLeavesFreedMemoryInThePool
+ 6/34 Test  #43: LmmCppad.SweepLeavesFreedMemoryInThePool ..............   Passed    0.00 sec
+      Start  44: LmmParity.AdeptMatchesXad
+ 7/34 Test  #44: LmmParity.AdeptMatchesXad .............................   Passed    0.03 sec
+      Start  45: LmmAdept.StackOutlivesAGradientCall
+ 8/34 Test  #45: LmmAdept.StackOutlivesAGradientCall ...................   Passed    0.00 sec
+      Start  46: LmmParity.AutodiffMatchesXad
+ 9/34 Test  #46: LmmParity.AutodiffMatchesXad ..........................   Passed    0.20 sec
+      Start  94: HestonCheck.XadMatchesCentralFd
+10/34 Test  #94: HestonCheck.XadMatchesCentralFd .......................   Passed    0.02 sec
+      Start  95: HestonCheck.CppadMatchesXadAtTwoPointsFromOneTape
+11/34 Test  #95: HestonCheck.CppadMatchesXadAtTwoPointsFromOneTape .....   Passed    0.02 sec
+      Start  96: HestonCheck.AdeptMatchesXad
+12/34 Test  #96: HestonCheck.AdeptMatchesXad ...........................   Passed    0.01 sec
+      Start  97: HestonCheck.AutodiffMatchesXad
+13/34 Test  #97: HestonCheck.AutodiffMatchesXad ........................   Passed    0.02 sec
+      Start  98: HestonCppad.SweepLeavesFreedMemoryInThePool
+14/34 Test  #98: HestonCppad.SweepLeavesFreedMemoryInThePool ...........   Passed    0.01 sec
+      Start  99: HestonBench.WritesOneRowPerColumnWithRatioAndMemory
+15/34 Test  #99: HestonBench.WritesOneRowPerColumnWithRatioAndMemory ...   Passed    0.04 sec
+      Start 100: HestonBench.PeakMemoryIsPerColumn
+16/34 Test #100: HestonBench.PeakMemoryIsPerColumn .....................   Passed    0.07 sec
+      Start 101: heston_bench_concurrent
+17/34 Test #101: heston_bench_concurrent ...............................   Passed    3.03 sec
+      Start 105: CvaGradient.EveryInputIsLive
+18/34 Test #105: CvaGradient.EveryInputIsLive ..........................   Passed    0.00 sec
+      Start 106: CvaGradient.FdUsesTheSameShocksAsAd
+19/34 Test #106: CvaGradient.FdUsesTheSameShocksAsAd ...................   Passed    0.01 sec
+      Start 107: CvaGradient.XadMatchesCentralFd
+20/34 Test #107: CvaGradient.XadMatchesCentralFd .......................   Passed    0.01 sec
+      Start 108: CvaGradient.XadGradientObjectReusesItsOwnTape
+21/34 Test #108: CvaGradient.XadGradientObjectReusesItsOwnTape .........   Passed    0.00 sec
+      Start 109: CvaParity.CppadMatchesXad
+22/34 Test #109: CvaParity.CppadMatchesXad .............................   Passed    0.00 sec
+      Start 110: CvaCppad.SweepLeavesFreedMemoryInThePool
+23/34 Test #110: CvaCppad.SweepLeavesFreedMemoryInThePool ..............   Passed    0.00 sec
+      Start 111: CvaParity.AdeptMatchesXad
+24/34 Test #111: CvaParity.AdeptMatchesXad .............................   Passed    0.00 sec
+      Start 112: CvaAdept.StackOutlivesAGradientCall
+25/34 Test #112: CvaAdept.StackOutlivesAGradientCall ...................   Passed    0.00 sec
+      Start 113: CvaParity.AutodiffMatchesXad
+26/34 Test #113: CvaParity.AutodiffMatchesXad ..........................   Passed    0.01 sec
+      Start 115: CvaMemory.EveryColumnReportsPeakMemory
+27/34 Test #115: CvaMemory.EveryColumnReportsPeakMemory ................   Passed    0.01 sec
+      Start 119: SabrJacobian.XadMatchesCentralFd
+28/34 Test #119: SabrJacobian.XadMatchesCentralFd ......................   Passed    0.00 sec
+      Start 120: SabrParity.CppadMatchesXad
+29/34 Test #120: SabrParity.CppadMatchesXad ............................   Passed    0.00 sec
+      Start 121: SabrCppadPool.SweepLeavesFreedMemoryInThePool
+30/34 Test #121: SabrCppadPool.SweepLeavesFreedMemoryInThePool .........   Passed    0.00 sec
+      Start 122: SabrCppad.RecordedTapeHoldsFarFromTheRecordingPoint
+31/34 Test #122: SabrCppad.RecordedTapeHoldsFarFromTheRecordingPoint ...   Passed    0.00 sec
+      Start 123: SabrParity.AdeptMatchesXad
+32/34 Test #123: SabrParity.AdeptMatchesXad ............................   Passed    0.00 sec
+      Start 124: SabrParity.AutodiffMatchesXad
+33/34 Test #124: SabrParity.AutodiffMatchesXad .........................   Passed    0.00 sec
+      Start 134: ConfigureOptions.SuiteConfiguresWithAdeptOff
+34/34 Test #134: ConfigureOptions.SuiteConfiguresWithAdeptOff ..........   Passed    2.71 sec
+
+100% tests passed, 0 tests failed out of 34
+
+Label Time Summary:
+check    =   6.48 sec*proc (34 tests)
+
+Total Test time (real) =   6.50 sec

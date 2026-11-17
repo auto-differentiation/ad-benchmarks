@@ -182,35 +182,35 @@ listed below.
 ### The run record
 
 `scripts/bench_all.sh` ends by writing `run-record.txt` into its output folder. It checks the source tree against the
-release's checksums, so an edited suite is visible; the commit it names must be the release tag's commit. The example
-below is from a test build of the release at the published sizes, with the XAD + codegen column; a run of v1.0.0
-names v1.0.0 and its tag's commit. Its options and "not in repo" lines are shortened here, so the record hash is that
-of the full record.
+release's checksums, so an edited suite is visible; the commit it names must be the release tag's commit. Below is the
+record of the v1.0.0 run listed under [Submitted results](#submitted-results)
+(`results/submitted/2026-11-16-amd-zen5/run-record.txt`). Its options line, which lists every XAD and suite build
+option, is shortened here, so the record hash is that of the full record.
 
 ```text
 ad-benchmarks run record
-suite        1.0.0 (9b87c4c), unmodified: source tree matches the release
-date         2026-11-16 22:18 UTC
+suite        1.0.0 (318815f), unmodified: source tree matches the release
+date         2026-11-16 23:45 UTC
 machine      AMD EPYC (Zen 5), 32 vCPU, Linux 7.0
 compiler     GNU 15.2.0, -O3 -DNDEBUG -ffp-contract=off -march=native, LTO
-options      ADB_ARCH_FLAGS=-march=native, ..., ADB_XAD_CODEGEN_VERSION_LABEL=2026.11, ..., XAD_LINEAR_SLOTS=ON, XAD_NO_THREADLOCAL=ON, XAD_USE_STRONG_INLINE=ON, ...
+options      ADB_ARCH_FLAGS=-march=native, ..., XAD_LINEAR_SLOTS=ON, XAD_NO_THREADLOCAL=ON, XAD_USE_STRONG_INLINE=ON, ...
 threads      1 (each program pinned to one CPU)
 libraries    XAD v2.2.0@aaf4e9c, Adept v2.1.3@b44ae49, CppAD 20250000.2@f7d1601, autodiff v1.1.2@2e2f3a2, Eigen 3.4.0@3147391
-not in repo  xad-codegen xad v2.2.0@aaf4e9c + xad-codegen 2026.11 (...), xad-codegen-jac ..., xad-codegen-lanes ...
+not in repo  none
 method       3 rounds, rotated workload order, median; gradient checks: not run by bench_all.sh (ctest -L check)
-results      round_1/cva.csv  sha256 cb2d9537765beaf6f228837f71c0087ac25be54dcf20daa5c4445ee33b3b578b
-             round_1/heston.csv  sha256 27cdd6de6251991beba7176ae1627d1f1259b526db19e69dfd6487d4da4afffc
-             round_1/lmm.csv  sha256 5fb11ca7884d5d21e2f80d128d06ad448356b9784dc665c31f1f3666723e793d
-             round_1/sabr.csv  sha256 2d9eae3f8549309a8fa157acccb709a860ae75c904b83976820ee4d4f7a95699
-             round_2/cva.csv  sha256 c8ce24a4d3d974b200ba2a8d1c340ee9bab3bca2370729035362821bc4dd35c3
-             round_2/heston.csv  sha256 fa542482947e173ab7393a6d700fbde43a808c2689b2ea5e61560e7f6a2ac403
-             round_2/lmm.csv  sha256 13abeb1b4a315fe1d685a012d403ace0f8e31e3aafb75d380cd7923a9daf2f04
-             round_2/sabr.csv  sha256 10962c1b7b8fd09bdd8f7f38e2ef684e99c6c7f92b24d70c3f3885c8c65dbca0
-             round_3/cva.csv  sha256 21130bd4747b72c9c9248b3496c3015b0c1745951ad215787cd8fdb632c11972
-             round_3/heston.csv  sha256 4d549aa138c5f7c4d867b379a11627d4beff98e824e24eab6d5677acc7d5c64f
-             round_3/lmm.csv  sha256 1e96fc04dd6c421f5e2ef32e7523023edcb99d0eca8cfdd6812f5fe5a4866bed
-             round_3/sabr.csv  sha256 911fd214aa5e859ae070ea431e277a9c4d3133e1f57a4603f177f054622d60fd
-record       sha256 af74c2a71d1a02a67981ea1365724b10746e1e71c5ca5a98d84d62c9063fa6a9
+results      round_1/cva.csv  sha256 2c3a6e44b86a50b42957e0c71e5b6322ca61be8948458353a30120e541037a31
+             round_1/heston.csv  sha256 ef68d250dbfc884d14a181fad00d36d767b20a0ee4d53dc5d8066a81be2bb248
+             round_1/lmm.csv  sha256 dfd33bb490b17c59d1b92a165afdc2f4127d37b2c3e714bda0d3a35d95d226ba
+             round_1/sabr.csv  sha256 a566e4431ff6f6399234c40d69e3bf9bedcce556a58ef2a3964f2ed604b94ee6
+             round_2/cva.csv  sha256 7a695832fc52666588cd624bac4a4867ac5a6b95eac7d031f00e07ff36f0a4b3
+             round_2/heston.csv  sha256 f551acf156b08ff685126ab7fed50e428b2c979b9678fe5c14a833d9ac0abd9c
+             round_2/lmm.csv  sha256 c82c3f4ec42c5cf2dc55cbd0937741c327355e88e996ce8ea46ab0150ec2cfb9
+             round_2/sabr.csv  sha256 a39efd80b05eace022163d0c6910fe60818fa272fd4f33a9de973bab3b93bb38
+             round_3/cva.csv  sha256 11fb640fb9504b7f105297e6da653d254c83f514e0ef1dbd7209f86552b216da
+             round_3/heston.csv  sha256 2bae327f09bf69e9c9c225885a9abba9b7ac4b30c3bc846826082b60ba0ad067
+             round_3/lmm.csv  sha256 1682cff6152e86ce395947c8f199c8acafca8c55c2fbd243a142a01e10de0083
+             round_3/sabr.csv  sha256 491deca61f4f7c7f4dbba645fdab372f1e9a31715e7655d87ba4d3b57abcfd70
+record       sha256 e04f0cd7d269c32a934904f829d2a3d7935bf5d06e1e431d81623b894ab19e9f
 ```
 
 A modified run says so, and lists the files:
@@ -224,6 +224,7 @@ suite        v1.0.0 (<commit>), MODIFIED: 2 files differ from the release
 
 | Date | Submitted by | Machine | Release | Libraries | Record |
 |---|---|---|---|---|---|
+| 2026-11-16 | XAD team | AMD EPYC (Zen 5) | v1.0.0 | XAD, Adept, CppAD, autodiff | [`results/submitted/2026-11-16-amd-zen5/`](results/submitted/2026-11-16-amd-zen5/) (gradient checks: `checks.txt`, all passed) |
 | | | | | | Your run here: open a pull request with its `run-record.txt` and results CSVs. |
 
 ## History

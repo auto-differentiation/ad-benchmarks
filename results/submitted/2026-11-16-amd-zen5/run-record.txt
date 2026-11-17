@@ -1,0 +1,23 @@
+ad-benchmarks run record
+suite        1.0.0 (318815f), unmodified: source tree matches the release
+date         2026-11-16 23:45 UTC
+machine      AMD EPYC (Zen 5), 32 vCPU, Linux 7.0
+compiler     GNU 15.2.0, -O3 -DNDEBUG -ffp-contract=off -march=native, LTO
+options      ADB_ARCH_FLAGS=-march=native, ADB_WITH_ADEPT=ON, ADB_WITH_AUTODIFF=ON, ADB_WITH_CPPAD=ON, ADB_WITH_XAD=ON, XAD_ALLOW_INT_CONVERSION=ON, XAD_COPY_ELISION=OFF, XAD_ENABLE_ADDRESS_SANITIZER=OFF, XAD_ENABLE_CODEGEN=OFF, XAD_ENABLE_EIGEN_TESTS=OFF, XAD_ENABLE_TESTS=OFF, XAD_EXTRA_MODES=forward:2:adjoint:4:float, XAD_HUGE_PAGES=OFF, XAD_LINEAR_SLOTS=ON, XAD_NO_THREADLOCAL=ON, XAD_OUTLINE_RECORDING=OFF, XAD_POSITION_INDEPENDENT_CODE=OFF, XAD_REDUCED_MEMORY=OFF, XAD_SHARED_LIBS=OFF, XAD_SIMD_OPTION=AVX, XAD_SKIP_ZERO_PARTIALS=OFF, XAD_TAPE_CHECKS=OFF, XAD_TAPE_REUSE_SLOTS=OFF, XAD_TAPE_TRACK_LIVE_SLOTS=OFF, XAD_TLS_INITIAL_EXEC=OFF, XAD_USE_STRONG_INLINE=ON, XAD_WARNINGS_PARANOID=ON
+threads      1 (each program pinned to one CPU)
+libraries    XAD v2.2.0@aaf4e9c, Adept v2.1.3@b44ae49, CppAD 20250000.2@f7d1601, autodiff v1.1.2@2e2f3a2, Eigen 3.4.0@3147391
+not in repo  none
+method       3 rounds, rotated workload order, median; gradient checks: not run by bench_all.sh (ctest -L check)
+results      round_1/cva.csv  sha256 2c3a6e44b86a50b42957e0c71e5b6322ca61be8948458353a30120e541037a31
+             round_1/heston.csv  sha256 ef68d250dbfc884d14a181fad00d36d767b20a0ee4d53dc5d8066a81be2bb248
+             round_1/lmm.csv  sha256 dfd33bb490b17c59d1b92a165afdc2f4127d37b2c3e714bda0d3a35d95d226ba
+             round_1/sabr.csv  sha256 a566e4431ff6f6399234c40d69e3bf9bedcce556a58ef2a3964f2ed604b94ee6
+             round_2/cva.csv  sha256 7a695832fc52666588cd624bac4a4867ac5a6b95eac7d031f00e07ff36f0a4b3
+             round_2/heston.csv  sha256 f551acf156b08ff685126ab7fed50e428b2c979b9678fe5c14a833d9ac0abd9c
+             round_2/lmm.csv  sha256 c82c3f4ec42c5cf2dc55cbd0937741c327355e88e996ce8ea46ab0150ec2cfb9
+             round_2/sabr.csv  sha256 a39efd80b05eace022163d0c6910fe60818fa272fd4f33a9de973bab3b93bb38
+             round_3/cva.csv  sha256 11fb640fb9504b7f105297e6da653d254c83f514e0ef1dbd7209f86552b216da
+             round_3/heston.csv  sha256 2bae327f09bf69e9c9c225885a9abba9b7ac4b30c3bc846826082b60ba0ad067
+             round_3/lmm.csv  sha256 1682cff6152e86ce395947c8f199c8acafca8c55c2fbd243a142a01e10de0083
+             round_3/sabr.csv  sha256 491deca61f4f7c7f4dbba645fdab372f1e9a31715e7655d87ba4d3b57abcfd70
+record       sha256 e04f0cd7d269c32a934904f829d2a3d7935bf5d06e1e431d81623b894ab19e9f

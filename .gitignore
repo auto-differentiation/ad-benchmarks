@@ -5,4 +5,5 @@ tmp/*
 # timing runs write wherever they are pointed; only the published results are kept
 results/*
 !results/amd/
+!results/submitted/
 __pycache__/
